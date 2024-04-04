@@ -15,7 +15,7 @@ DeviceManager::DeviceManager(ServoTimer2 servo, LiquidCrystal_I2C lcd) {
       servo.attach(9); // Attach servo to pin 9
       lcd.init(); // Initialize the LCD
       lcd.backlight(); // Turn on the backlight
-  }
+}
 
 int getAngle() {
 return servoAngle;

@@ -8,7 +8,7 @@ public:
   bool read();
   int getAngle();
   bool getMode();
-  void sendSerial()
+  void sendSerial();
 
 private:
   String incomingByte;
