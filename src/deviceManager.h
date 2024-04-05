@@ -3,19 +3,15 @@
 
 #include <ServoTimer2.h>
 #include <LiquidCrystal_I2C.h>
-
-#define MAXANGLE 1800
-#define MINANGLE 0
+#include "devices/serial.h"
+#include "Config.h"
 
 class DeviceManager {
  
 public: 
-  DeviceManager(ServoTimer2 servo, LiquidCrystal_I2C lcd);
-
-  int getAngle();
-  void setAngle(int angle);
-  bool getMode();
-  void setMode(bool mode);
+  DeviceManager(SerialImpl* serial);
+  void setLCD();
+  void setServo();
 };
 
 #endif

@@ -1,37 +1,29 @@
 #include <deviceManager.h>
-#include <ServoTimer2.h>
-#include <LiquidCrystal_I2C.h>
-#define MAXANGLE 1800
-#define MINANGLE 0   
 
 int servoAngle = 0;
 bool autoMode = true;
 ServoTimer2 servo;
 LiquidCrystal_I2C lcd(0x27,20,4); 
+SerialImpl* serial;
 
-
-DeviceManager::DeviceManager(ServoTimer2 servo, LiquidCrystal_I2C lcd) {
+DeviceManager::DeviceManager(SerialImpl* serial) {
+    serial = serial;
       // Initialize servo and LCD here if necessary
-      servo.attach(9); // Attach servo to pin 9
-      lcd.init(); // Initialize the LCD
+      servo.attach(SERVOPORT); // Attach servo to pin 9
+      lcd.begin(2, 1); // Initialize the LCD
       lcd.backlight(); // Turn on the backlight
 }
 
-int getAngle() {
-return servoAngle;
+void DeviceManager::setLCD() {
+    lcd.print(serial->getAngle());
+    lcd.print(", ");
+    lcd.print(serial->getMode() ? MANUAL : AUTOMATIC);
+    lcd.setCursor(2, 1);
 }
 
-void setAngle(int angle) {
-if (angle >= MINANGLE && angle <= MAXANGLE) {
-    servoAngle = angle;
-    servo.write(angle); // Update the servo position
-}
-}
-
-bool getMode() {
-return autoMode;
-}
-
-void setMode(bool mode) {
-autoMode = mode;
+void DeviceManager::setServo() {
+    servoAngle = serial->getAngle();
+    if (servoAngle >= MINANGLE && servoAngle <= MAXANGLE) {
+        servo.write(servoAngle);
+    }
 }

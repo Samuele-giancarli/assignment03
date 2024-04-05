@@ -1,6 +1,7 @@
 #ifndef __SERIAL__
 #define __SERIAL__
 
+#include "string.h"
 class SerialImpl {
  
 public: 
@@ -9,13 +10,7 @@ public:
   int getAngle();
   bool getMode();
   void sendSerial();
-
-private:
-  String incomingByte;
-  int angle;
-  String mode;
+  void setMode(bool mode);
 };
-
-
 
 #endif

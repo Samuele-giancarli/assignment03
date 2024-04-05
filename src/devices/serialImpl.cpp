@@ -1,5 +1,10 @@
 #include "serial.h"
 #include "Arduino.h"
+#include "Config.h"
+
+String incomingByte;
+int angle;
+boolean mode;
 
 SerialImpl::SerialImpl(){
   Serial.begin(9600);
@@ -22,11 +27,11 @@ bool SerialImpl::read() {
 
     if (angleString != NULL && modeString != NULL) {
       angle = atoi(angleString); // Convert angle string to integer
-      mode = (strcmp(modeString, "ON") == 0);
-    return true;
+      mode = (strcmp(modeString, MANUAL) == 0);
     }
   }
   }
+  return mode;
 }
 
 int SerialImpl::getAngle() {
@@ -37,8 +42,12 @@ bool SerialImpl::getMode() {
   return mode;
 }
 
+void setMode(bool mode) {
+    mode = mode;
+}
+
 void SerialImpl::sendSerial() {
-  Serial.println(angle + "," + mode ? "ON" : "OFF");
+  Serial.println(angle + "," + mode ? MANUAL : AUTOMATIC);
 }
 
 
