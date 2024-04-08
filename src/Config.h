@@ -6,13 +6,13 @@
 #define MANUALCODE true
 #define AUTOMATICCODE false
 
-#define SERVOPORT 3
+#define SERVOPORT 5
 #define BUTTONPORT 2
-#define POTPORT 5
+#define POTPORT A0
 
 
-#define MAXANGLE 1800
-#define MINANGLE 0   
+#define MAXANGLE 1500
+#define MINANGLE 750  
 
 
 #endif

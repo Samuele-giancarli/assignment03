@@ -11,6 +11,7 @@ public:
   bool getMode();
   void sendSerial();
   void setMode(bool mode);
+  void setAngle(int angle);
 };
 
 #endif

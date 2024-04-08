@@ -3,8 +3,8 @@
 #include "Config.h"
 
 String incomingByte;
-int angle;
-boolean mode;
+int angle = 750;
+boolean mode = 0;
 
 SerialImpl::SerialImpl(){
   Serial.begin(9600);
@@ -42,12 +42,17 @@ bool SerialImpl::getMode() {
   return mode;
 }
 
-void setMode(bool mode) {
+void SerialImpl::setMode(bool mode) {
     mode = mode;
 }
 
+void SerialImpl::setAngle(int angle) {
+    angle = angle;
+}
+
 void SerialImpl::sendSerial() {
-  Serial.println(angle + "," + mode ? MANUAL : AUTOMATIC);
+  Serial.write("SonO stupido e non stampo l'angolo\n");
+  Serial.write(angle + "," + mode ? MANUAL : AUTOMATIC);
 }
 
 

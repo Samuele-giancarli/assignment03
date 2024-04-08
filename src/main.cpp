@@ -11,6 +11,8 @@
 SerialImpl* mainSerial;
 DeviceManager* manager;
 
+enum  { MAN, AUTO} currentState;
+
 class ButtonLedAsyncFSM : public AsyncFSM {
   public:
     ButtonLedAsyncFSM(Button* button){
@@ -25,13 +27,13 @@ class ButtonLedAsyncFSM : public AsyncFSM {
       case AUTO:  
         if (ev->getType() == BUTTON_PRESSED_EVENT){
           currentState = MAN;
-          Serial.write(MANUAL);
+          mainSerial->setMode(MANUALCODE);
         }
         break; 
       case MAN: 
         if (ev->getType() == BUTTON_RELEASED_EVENT){
           currentState = AUTO;
-          Serial.write(AUTOMATIC);
+          mainSerial->setMode(AUTOMATICCODE);
         }
       }
     }
@@ -39,7 +41,6 @@ class ButtonLedAsyncFSM : public AsyncFSM {
   private:
     int count; 
     Button* button;
-    enum  { MAN, AUTO} currentState;
 };
 
 ButtonLedAsyncFSM* myAsyncFSM;
@@ -50,13 +51,23 @@ void setup() {
 
   mainSerial = new SerialImpl();
   manager = new DeviceManager(mainSerial);
-  Serial.write("Hello");
 }
 
 void loop() {
-  myAsyncFSM->checkEvents();
-  mainSerial->read();
+
   manager->setLCD();
   manager->setServo();
+
+  myAsyncFSM->checkEvents();
+
+  switch (currentState) {
+    case MAN:
+      mainSerial->read();
+      break;
+    case AUTO:
+      manager->getPot();
+      break;
+  }
+  
   mainSerial->sendSerial();
 }
