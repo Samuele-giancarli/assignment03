@@ -3,8 +3,6 @@
 
 #define MANUAL "MANUAL"
 #define AUTOMATIC "AUTOMATIC"
-#define MANUALCODE true
-#define AUTOMATICCODE false
 
 #define SERVOPORT 5
 #define BUTTONPORT 2
