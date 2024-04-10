@@ -19,7 +19,7 @@ class ChangeStateTask {
 
     private:
     enum {MAN, AUTO} state;
-    int currentAngle;
+    double currentAngle;
 
 };
 

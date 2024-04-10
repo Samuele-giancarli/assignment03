@@ -9,14 +9,17 @@ SendingTask::SendingTask(ChangeStateTask* stateHandler) {
 void SendingTask::tick() {
     if(stateHandler->isStateAutomatic()) {
         int sensorValue = analogRead(POTPORT);
-        stateHandler->setAngle(sensorValue);
+        int servoAngle = map(sensorValue, 0, 1023, MINANGLE, MAXANGLE);
+        stateHandler->setAngle(servoAngle);
         Serial.write("PAPERELLA GAY");
-        Serial.write(stateHandler->getAngle());
-        Serial.write(", ");
-        Serial.write(stateHandler->isStateManual() ? MANUAL : AUTOMATIC);
+    }   
+        
+        while (Serial.read() >= 0); // do nothing
+        
+        String message = String(stateHandler->getAngle()) + ", " + (stateHandler->isStateManual() ? "MANUAL" : "AUTOMATIC");
+        Serial.println(message);
 
-        delay(2000);
-    }
+        delay(1000);
 }
 
 

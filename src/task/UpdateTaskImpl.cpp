@@ -1,6 +1,6 @@
 #include "UpdateTask.h"
 
-int servoAngle = 0;
+double servoAngle = 0;
 bool autoMode = true;
 ServoTimer2 servo;
 LiquidCrystal_I2C lcd(0x27,20,4); 
@@ -20,6 +20,7 @@ void UpdateTask::tick() {
 }
 
 void UpdateTask::setLCD() {
+    lcd.clear();
     lcd.setCursor(2,1);
     lcd.print(stateHandler->getAngle());
     lcd.print(", ");
