@@ -15,7 +15,6 @@ public:
   long stateTimeStamp;
   ChangeStateTask* stateHandler;
   void read();
-  void sendSerial();
 
 };
 

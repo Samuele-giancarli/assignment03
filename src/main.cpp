@@ -27,7 +27,7 @@ void setup() {
   t0->init(100);
   scheduler.addTask(t0);
 
-  Task* t1 = new ReadingTask(stateHandler);
+  Task* t1 = new SendingTask(stateHandler);
   t1->init(100);
   scheduler.addTask(t1);
 
@@ -35,7 +35,7 @@ void setup() {
   t2->init(100);
   scheduler.addTask(t2);
 
-  Task* t3 = new SendingTask(stateHandler);
+  Task* t3 = new ReadingTask(stateHandler);
   t3->init(100);
   scheduler.addTask(t3);
 

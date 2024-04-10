@@ -12,7 +12,7 @@ void ButtonTask::tick()
         if(stateHandler->isStateManual()) {
             stateHandler->setStateAutomatic();
         } else {
-            stateHandler->isStateManual();
+            stateHandler->setStateManual();
         }
         
     }

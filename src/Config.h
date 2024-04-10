@@ -5,7 +5,7 @@
 #define AUTOMATIC "AUTOMATIC"
 
 #define SERVOPORT 5
-#define BUTTONPORT 2
+#define BUTTONPORT 8
 #define POTPORT A0
 
 
