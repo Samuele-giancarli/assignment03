@@ -5,6 +5,7 @@
 #include "task/ReadingTask.h"
 #include "task/UpdateTask.h"
 #include "task/SendingTask.h"
+#include "task/ButtonTask.h"
 #include "changeStateTask.h"
 
 Scheduler scheduler;
@@ -21,18 +22,22 @@ void setup() {
 
   scheduler.init(100);
   //baseperiod in millisecondi
-
-  Task* t0 = new ReadingTask(stateHandler);
+  
+  Task* t0 = new ButtonTask(stateHandler);
   t0->init(100);
   scheduler.addTask(t0);
 
-  Task* t1 = new UpdateTask(stateHandler);
+  Task* t1 = new ReadingTask(stateHandler);
   t1->init(100);
   scheduler.addTask(t1);
 
-  Task* t2 = new SendingTask(stateHandler);
+  Task* t2 = new UpdateTask(stateHandler);
   t2->init(100);
   scheduler.addTask(t2);
+
+  Task* t3 = new SendingTask(stateHandler);
+  t3->init(100);
+  scheduler.addTask(t3);
 
   stateHandler->setStateManual();
 
@@ -40,6 +45,5 @@ void setup() {
 }
 
 void loop() {
-
   scheduler.schedule();
 }

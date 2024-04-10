@@ -14,8 +14,6 @@ void ReadingTask::tick() {
     read();
     if(mode==MAN && !stateHandler->isStateManual()) {
         stateHandler->setStateManual();
-    } else if(!stateHandler->isStateAutomatic()){
-        stateHandler->setStateAutomatic();
     }
     stateHandler->setAngle(angle);
 }
