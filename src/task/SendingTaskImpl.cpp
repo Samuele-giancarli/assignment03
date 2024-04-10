@@ -14,6 +14,8 @@ void SendingTask::tick() {
         Serial.write(stateHandler->getAngle());
         Serial.write(", ");
         Serial.write(stateHandler->isStateManual() ? MANUAL : AUTOMATIC);
+
+        delay(2000);
     }
 }
 

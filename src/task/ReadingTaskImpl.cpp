@@ -11,6 +11,7 @@ ReadingTask::ReadingTask(ChangeStateTask* stateHandler) {
 }
 
 void ReadingTask::tick() {
+    delay(2000);
     read();
     if(mode==MAN && !stateHandler->isStateManual()) {
         stateHandler->setStateManual();

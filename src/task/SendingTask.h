@@ -13,7 +13,6 @@ public:
   private:
   long stateTimeStamp;
   ChangeStateTask* stateHandler;
-
 };
 
 #endif
