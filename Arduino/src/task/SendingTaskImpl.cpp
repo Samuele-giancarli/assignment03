@@ -19,7 +19,7 @@ void SendingTask::tick() {
         String message = String(stateHandler->getAngle()) + ", " + (stateHandler->isStateManual() ? "MANUAL" : "AUTOMATIC");
         Serial.println(message);
 
-        delay(1000);
+        //delay(1000);
 }
 
 
