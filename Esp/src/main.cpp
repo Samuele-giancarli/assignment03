@@ -10,7 +10,7 @@
 #include <WiFi.h>
 
 String ssid = "OPPO A9 2020";
-String pass = "vv6miwa8";
+String pass = "";
 String brokerUser = "ginevra.bartolini@studio.unibo.it";
 String brokerPass = "4Rc8mak_01";
 String broker = "mqtt.dioty.co";
