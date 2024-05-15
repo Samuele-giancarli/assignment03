@@ -1,6 +1,6 @@
 function updateChart() {
   async function fetchData() {
-    const url = 'http://localhost/assignament-03-web/waterLevel.json';
+    const url = 'http://localhost/Assignement-03/assignment03/Web/waterLevel.json';
     const response = await fetch(url);
     const datapoints = await response.json();
     return datapoints;
@@ -52,5 +52,19 @@ const myChart = new Chart(
   document.getElementById('acquisitions'),
   config
 );
+
+
+function createHttpObject() {
+  try {return new XMLHttpRequest();}
+  catch (error) {}
+
+  throw new Error("Could not create HTTP request object.");
+}
+
+var request = new createHttpObject();
+request.open("GET", "http://localhost/Assignement-03/assignment03/Web", true);
+request.send(null);
+console.log(request.responseText);
+
 
 updateChart();
