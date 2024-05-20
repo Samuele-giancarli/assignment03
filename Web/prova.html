@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Random Number Receiver</title>
+
+</head>
+
+<body>
+
+    <h1>Random Number Receiver</h1>
+
+    <p id="randomNumberDisplay"></p>
+
+
+    <script>
+
+        function fetchData() {
+
+            var xhr = new XMLHttpRequest();
+
+            xhr.open('POST', 'data.php', true);
+
+            xhr.setRequestHeader('Content-Type', 'application/json');
+
+            xhr.onload = function() {
+
+                if (xhr.status === 200) {
+
+                    var data = JSON.parse(xhr.responseText);
+
+                    document.getElementById("randomNumberDisplay").textContent = `Received level: ${data.level}, timestamp: ${data.timestamp}`;
+
+                }
+
+            };
+
+            xhr.send();
+
+        }
+
+
+        setInterval(fetchData, 2000); // Fetch data every 2 seconds
+
+    </script>
+
+</body>
+
+</html>
