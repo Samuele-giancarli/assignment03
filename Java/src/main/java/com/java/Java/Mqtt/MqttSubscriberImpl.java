@@ -28,7 +28,7 @@ public class MqttSubscriberImpl extends MqttConfig implements MqttCallback{
     @Override
     protected void config(String broker, Integer port, Boolean ssl) {
         logger.info("Inside Parameter Config");
-        String protocal = this.TCP;
+        String protocal = this.HTTP;
 
         this.brokerUrl = protocal + this.broker + colon + port;
         this.persistence = new MemoryPersistence();
@@ -47,7 +47,7 @@ public class MqttSubscriberImpl extends MqttConfig implements MqttCallback{
     @Override
     protected void config() {
         logger.info("Inside Config with parameter");
-        this.brokerUrl = this.TCP + this.broker + colon + this.port;
+        this.brokerUrl =  this.broker + colon + this.port;
         this.persistence = new MemoryPersistence();
         this.connectionOptions = new MqttConnectOptions();
         try {

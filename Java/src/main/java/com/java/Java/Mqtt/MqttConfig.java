@@ -6,6 +6,7 @@ public abstract class MqttConfig {
     protected final int qos = 1;
     protected Boolean hasSSL = false; /*By default SSL is disabled */
     protected Integer port = 1883; /* Default port */
+    protected final String HTTP = "http://";
  
     /**
      * Custom Configuration
@@ -15,7 +16,7 @@ public abstract class MqttConfig {
      * @param ssl
      * @param withUserNamePass
      */
-    protected abstract void config(String broker, Integer port, Boolean ssl);
+    protected abstract void config(String broker, Integer port, Boolean ssl, Boolean withUserNamePass);
  
     /**
      * Default Configuration
