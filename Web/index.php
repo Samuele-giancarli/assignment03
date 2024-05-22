@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>River Monitoring Dashboard</title>
+    <title>Prova http</title>
 </head>
 <body>
+    <script>
+        fetch("http://localhost:8081/api/messages")
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+
+    </script>
+
     <!--
         About the River Monitoring Dashboard
         The dashboard has two main responsibilities:
@@ -33,7 +40,7 @@
 
         <div>
             <p>Manual Control:</p>
-            <button><!--Per passare da manuale a automatico e contrario--></button>
+            <button class="clickbutton"><!--Per passare da manuale a automatico e contrario--></button>
             <div>
                 <p>Closed</p>
                 <input type="range" min="1" max="100" value="50" class="slider" id="myRange">
@@ -44,7 +51,7 @@
     
     <script type="module" src="index.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 
 
 </body>

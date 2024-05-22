@@ -1,4 +1,6 @@
-function updateChart() {
+const button = document.querySelector(".clickbutton");
+
+/*function updateChart() {
   async function fetchData() {
     const url = 'http://localhost/Assignement-03/assignment03/Web/waterLevel.json';
     const response = await fetch(url);
@@ -51,20 +53,32 @@ const config = {
 const myChart = new Chart(
   document.getElementById('acquisitions'),
   config
-);
+);*/
 
 
-function createHttpObject() {
-  try {return new XMLHttpRequest();}
-  catch (error) {}
-
-  throw new Error("Could not create HTTP request object.");
+const getData = () =>{
+  console.log("Funzioneaperta");
+  fetch('http://localhost/Assignement-03/assignment03/Web', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    }
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    console.log(response);
+    return response.json();
+  })
+  .then(data => console.log(data))
+  .catch(error => console.error('Error:', error));
 }
 
-var request = new createHttpObject();
-request.open("GET", "http://localhost/Assignement-03/assignment03/Web", true);
-request.send(null);
-console.log(request.responseText);
+button.addEventListener('click', () => {
+  console.log("Grazie per avermi cliccato");
+  getData();
+})
 
 
-updateChart();
