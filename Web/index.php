@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>River Monitoring Dashboard</title>
+    <title>Prova http</title>
 </head>
 <body>
+    <script>
+        fetch("http://localhost:8081/api/messages")
+        .then((response) => response.json())
+        .then((json) => console.log(json));
+
+    </script>
+
     <!--
         About the River Monitoring Dashboard
         The dashboard has two main responsibilities:
