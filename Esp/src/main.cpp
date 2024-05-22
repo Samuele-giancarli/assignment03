@@ -9,14 +9,14 @@ const char* ssid = "OPPO A9 2020";
 const char* password = "vv6miwa8";
 
 /* MQTT server address */
-const char* mqtt_server = "broker.mqtt-dashboard.com";
+const char* mqtt_server = "broker.hivemq.com";
+const int mqtt_port = 1883;
 
 /* MQTT topic */
 const char* waterLevelTopic = "water-level-topic";
 const char* systemStateTopic = "system-state-topic";
 
 /* MQTT client management */
-
 WiFiClient espClient;
 PubSubClient client(espClient);
 
@@ -59,12 +59,13 @@ void setup_wifi() {
 
 /* MQTT subscribing callback -> viene chiamato ogni volta che viene postato un messaggio sul topic*/
 void callbackSystemState(char* topic, byte* payload, unsigned int length) {
-  Serial.println("trapano");
-  delay(1000);
-  if(topic == systemStateTopic) {
-    Serial.println(String("Message arrived on [") + topic + "] len: " + length );
-    delay(1000);
+  Serial.print("Message arrived [");
+  Serial.print(topic);
+  Serial.print("] ");
+  for (int i = 0; i < length; i++) {
+    Serial.print((char)payload[i]);
   }
+  Serial.println();
 }
 
 void reconnect() {
@@ -109,13 +110,11 @@ void sendWaterLevel() {
     unsigned long now = millis();
     if (now - lastMsgTime > waterTime) {
     lastMsgTime = now;
-    Serial.println("banana");
-  delay(1000);
     Serial.print("Water level: ");
     Serial.println(calDist());
     delay(1000);
     snprintf (msg, MSG_BUFFER_SIZE, "%ld", calDist());
-delay(1000);
+    delay(1000);
 
     /* publishing the msg */
     client.publish(waterLevelTopic, msg); 
@@ -126,12 +125,14 @@ delay(1000);
 void setup() {
   Serial.begin(9600);
   while(!Serial) {
+
   }
 
   setup_wifi();
   randomSeed(micros());
-  client.setServer(mqtt_server, 1883);
+  client.setServer(mqtt_server, mqtt_port);
   client.setCallback(callbackSystemState);
+  client.subscribe(systemStateTopic);
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
 }
@@ -142,8 +143,6 @@ void loop() {
   if (!client.connected()) {
     reconnect();
   }
-  Serial.println("papera");
-  delay(1000);
   client.loop();
   sendWaterLevel();
 }

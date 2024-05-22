@@ -13,17 +13,21 @@ java {
 
 repositories {
 	mavenCentral()
-	maven {
-        url("https://repo.eclipse.org/content/repositories/paho-snapshots/")
-    }
 }
 
 dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-	compile('org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.0.2')
-    compile('org.eclipse.paho:org.eclipse.paho.android.service:1.0.2')
+
+	implementation("io.vertx:vertx-core:4.5.7")
+	implementation("io.netty:netty-all:4.1.109.Final")
+	implementation("io.vertx:vertx-mqtt:4.5.7")
+	implementation("io.vertx:vertx-ext:38")
+
+  	implementation("com.hivemq:hivemq-mqtt-client:1.3.0")
+	implementation("com.hivemq:hivemq-community-edition-embedded:2024.3")
+
 }
 
 tasks.withType<Test> {

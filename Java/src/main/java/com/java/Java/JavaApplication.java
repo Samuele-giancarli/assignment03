@@ -2,29 +2,18 @@ package com.java.Java;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+
 
 @SpringBootApplication
 public class JavaApplication extends SpringBootServletInitializer {
 
-	@Autowired
-	Runnable MessageListener;
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(Application.class);
-	}
-
 	public static void main(String[] args) {
-		SpringApplication.run(JavaApplication.class, args);
-	}
-
-	@Bean
-	public CommandLineRunner schedulingRunner(TaskExecutor executor) {
-	   return new CommandLineRunner() {
-		  public void run(String... args) throws Exception {
-			 executor.execute(MessageListener);
-		  }
-	   };
+		MQTTAgent agent = new MQTTAgent();
+        agent.start();
+        SpringApplication.run(JavaApplication.class, args);
+        
+		System.out.println("Hello, i'm in main");
 	}
 
 }
