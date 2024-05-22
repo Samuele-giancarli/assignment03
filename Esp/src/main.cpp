@@ -3,6 +3,14 @@
  * thanks to FreeRTOS support.  
  *
  */
+
+/*
+  ESP:
+  - tolgiere i delay e utilizzare gli interrupt
+  ogni tot si deve svegliare e calcolare la distanza del sonar
+  - funzione di callback da modificare per fargli modificare la frequenza concui ha l'interrupt
+  - 
+*/
  
 #include <HardwareSerial.h>
 #include <Arduino.h>
@@ -18,21 +26,62 @@ String broker = "mqtt.dioty.co";
 WiFiClient espClient;
 PubSubClient client(espClient);
 
+
+
+hw_timer_t * timer = NULL;
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
+volatile bool timerFinished = false;
+
+void IRAM_ATTR onTimer() {
+    portENTER_CRITICAL_ISR(&timerMux);
+    timerFinished = true;
+    portEXIT_CRITICAL_ISR(&timerMux);
+}
+
+void setupTimer(){
+  Serial.begin(115200);
+  timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(timer, &onTimer, true);
+  timerAlarmWrite(timer, 100000, false);
+  timerAlarmEnable(timer);
+}
+
+
+
 void wifiSetup() {
-  delay(10000);
+  //-------------------
+  timerFinished = false;
+  timerRestart(timer);
+  while(!timerFinished){
+  }
+  //--------------------
   Serial.print("\nConnection to");
   Serial.print(ssid);
 
-  delay(10000);
-
+  //-------------------
+  timerFinished = false;
+  timerRestart(timer);
+  while(!timerFinished){
+  }
+  //--------------------
   WiFi.begin(ssid,pass);
 
   while(WiFi.status() != WL_CONNECTED) {
-    delay(100);
+  //-------------------
+  timerFinished = false;
+  timerRestart(timer);
+  while(!timerFinished){
+  }
+  //--------------------
     Serial.print(".");
   }
   Serial.print("Connection succesful");
-  delay(10000);
+  //-------------------
+  timerFinished = false;
+  timerRestart(timer);
+  while(!timerFinished){
+  }
+  //--------------------
 }
 
 void reconnect() {
@@ -43,7 +92,12 @@ void reconnect() {
       Serial.println(broker);
     } else {
       Serial.print("Trying connecting again");
-      delay(10000);
+      //-------------------
+      timerFinished = false;
+      timerRestart(timer);
+      while(!timerFinished){
+      }
+      //--------------------
     }
   }
 }
@@ -62,7 +116,12 @@ void loop() {
     reconnect();
   }
    Serial.print("\nScemo");
-   delay(1000);
+   //-------------------
+    timerFinished = false;
+    timerRestart(timer);
+    while(!timerFinished){
+    }
+    //--------------------
   // Wait for a second
   //delay(1000);
 }
