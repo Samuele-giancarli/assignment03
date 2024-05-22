@@ -1,4 +1,4 @@
-/*********
+/********
   Rui Santos
   Complete project details at https://RandomNerdTutorials.com/esp32-hc-sr04-ultrasonic-arduino/
   
