@@ -117,9 +117,7 @@ void reconnect() {
 #include <PubSubClient.h>
 #define MSG_BUFFER_SIZE  50
 
-
 /* wifi network info */
-
 const char* ssid = "OPPO A9 2020";
 const char* password = "vv6miwa8";
 
@@ -152,9 +150,37 @@ float distanceCm;
 const int waterTime = 6000;
 
 
+
+
+
+
+
+hw_timer_t * timer = NULL;
+portMUX_TYPE timerMux = portMUX_INITIALIZER_UNLOCKED;
+volatile bool timerFinished = false;
+
+void IRAM_ATTR onTimer() {
+    portENTER_CRITICAL_ISR(&timerMux);
+    timerFinished = true;
+    portEXIT_CRITICAL_ISR(&timerMux);
+}
+
+void setupTimer(){
+  Serial.begin(115200);
+  timer = timerBegin(0, 80, true);
+  timerAttachInterrupt(timer, &onTimer, true);
+  timerAlarmWrite(timer, 1000, false);
+  timerAlarmEnable(timer);
+}
+
+
+
+
+
+
 void setup_wifi() {
 
-  delay(100);
+  delay(100); //-----------------------
 
   Serial.println(String("Connecting to ") + ssid);
 
@@ -162,7 +188,7 @@ void setup_wifi() {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
+    delay(500); //-----------------------
     Serial.print(".");
   }
 
@@ -175,10 +201,10 @@ void setup_wifi() {
 /* MQTT subscribing callback -> viene chiamato ogni volta che viene postato un messaggio sul topic*/
 void callbackSystemState(char* topic, byte* payload, unsigned int length) {
   Serial.println("trapano");
-  delay(1000);
+  delay(1000);//-----------------------
   if(topic == systemStateTopic) {
     Serial.println(String("Message arrived on [") + topic + "] len: " + length );
-    delay(1000);
+    delay(1000);//-----------------------
   }
 }
 
@@ -204,14 +230,14 @@ void reconnect() {
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
-      delay(5000);
+      delay(5000);//-----------------------
     }
   }
 }
 
 long calDist(){
   digitalWrite(trigPin, HIGH);
-  delayMicroseconds(10);
+  delayMicroseconds(10);//-----------------------
   digitalWrite(trigPin, LOW);
   // measure duration of pulse from ECHO pin
   duration = pulseIn(echoPin, HIGH);
@@ -225,16 +251,34 @@ void sendWaterLevel() {
     if (now - lastMsgTime > waterTime) {
     lastMsgTime = now;
     Serial.println("banana");
-  delay(1000);
+    //delay(1000);//-----------------------
+    timerFinished = false;
+    timerRestart(timer);
+    while(!timerFinished){
+    }
+
     Serial.print("Water level: ");
     Serial.println(calDist());
-    delay(1000);
+    //delay(1000);//-----------------------
+    timerFinished = false;
+    timerRestart(timer);
+    while(!timerFinished){
+    }
+
     snprintf (msg, MSG_BUFFER_SIZE, "%ld", calDist());
-delay(1000);
+    //delay(1000);//------------------------
+    timerFinished = false;
+    timerRestart(timer);
+    while(!timerFinished){
+    }
 
     /* publishing the msg */
     client.publish(waterLevelTopic, msg); 
-    delay(1000);
+    //delay(1000);//-----------------------
+    timerFinished = false;
+    timerRestart(timer);
+    while(!timerFinished){
+    }
 }
 }
 
@@ -258,7 +302,11 @@ void loop() {
     reconnect();
   }
   Serial.println("papera");
-  delay(1000);
+  //delay(1000);//-----------------------
+  timerFinished = false;
+  timerRestart(timer);
+  while(!timerFinished){
+  }
   client.loop();
   sendWaterLevel();
 }
