@@ -161,8 +161,16 @@ volatile bool timerFinished = false;
 
 void IRAM_ATTR onTimer() {
     portENTER_CRITICAL_ISR(&timerMux);
-    timerFinished = true;
+    //timerFinished = true;
+    if (timerAlarmRead(timer) == 100) {
+        timer100Ended = true;
+    } else if (timerAlarmRead(timer) == 1000) {
+        timer1000Ended = true;
+    } else if (timerAlarmRead(timer) == 5000) {
+        timer5000Ended = true;
+    }
     portEXIT_CRITICAL_ISR(&timerMux);
+
 }
 
 void setupTimer(){
@@ -180,7 +188,11 @@ void setupTimer(){
 
 void setup_wifi() {
 
-  delay(100); //-----------------------
+  //delay(100); //-----------------------
+  timer100Ended = false;
+  timerRestart(timer);
+  while(!timer100Ended){
+  }
 
   Serial.println(String("Connecting to ") + ssid);
 
@@ -188,7 +200,11 @@ void setup_wifi() {
   WiFi.begin(ssid, password);
 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500); //-----------------------
+    //delay(500); //-----------------------
+    timer500Ended = false;
+    timerRestart(timer);
+    while(!timer500Ended){
+    }
     Serial.print(".");
   }
 
@@ -201,10 +217,18 @@ void setup_wifi() {
 /* MQTT subscribing callback -> viene chiamato ogni volta che viene postato un messaggio sul topic*/
 void callbackSystemState(char* topic, byte* payload, unsigned int length) {
   Serial.println("trapano");
-  delay(1000);//-----------------------
+  //delay(1000);//-----------------------
+  timer1000Ended = false;
+  timerRestart(timer);
+  while(!timer1000Ended){
+  }
   if(topic == systemStateTopic) {
     Serial.println(String("Message arrived on [") + topic + "] len: " + length );
-    delay(1000);//-----------------------
+    //delay(1000);//-----------------------
+    timer1000Ended = false;
+    timerRestart(timer);
+    while(!timer1000Ended){
+    }
   }
 }
 
@@ -230,7 +254,11 @@ void reconnect() {
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
       // Wait 5 seconds before retrying
-      delay(5000);//-----------------------
+      //delay(5000);//-----------------------
+      timer5000Ended = false;
+      timerRestart(timer);
+      while(!timer5000Ended){
+      }
     }
   }
 }
@@ -252,32 +280,32 @@ void sendWaterLevel() {
     lastMsgTime = now;
     Serial.println("banana");
     //delay(1000);//-----------------------
-    timerFinished = false;
+    timer1000Ended = false;
     timerRestart(timer);
-    while(!timerFinished){
+    while(!timer1000Ended){
     }
 
     Serial.print("Water level: ");
     Serial.println(calDist());
     //delay(1000);//-----------------------
-    timerFinished = false;
+    timer1000Ended = false;
     timerRestart(timer);
-    while(!timerFinished){
+    while(!timer1000Ended){
     }
 
     snprintf (msg, MSG_BUFFER_SIZE, "%ld", calDist());
     //delay(1000);//------------------------
-    timerFinished = false;
+    timer1000Ended = false;
     timerRestart(timer);
-    while(!timerFinished){
+    while(!timer1000Ended){
     }
 
     /* publishing the msg */
     client.publish(waterLevelTopic, msg); 
     //delay(1000);//-----------------------
-    timerFinished = false;
+    timer1000Ended = false;
     timerRestart(timer);
-    while(!timerFinished){
+    while(!timer1000Ended){
     }
 }
 }
@@ -303,9 +331,9 @@ void loop() {
   }
   Serial.println("papera");
   //delay(1000);//-----------------------
-  timerFinished = false;
+  timer1000Ended = false;
   timerRestart(timer);
-  while(!timerFinished){
+  while(!timer1000Ended){
   }
   client.loop();
   sendWaterLevel();
