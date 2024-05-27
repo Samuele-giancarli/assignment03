@@ -6,12 +6,6 @@
     <title>Prova http</title>
 </head>
 <body>
-    <script>
-        fetch("http://localhost:8080/")
-        .then((response) => response.json())
-        .then((json) => console.log(json));
-
-    </script>
 
     <!--
         About the River Monitoring Dashboard
@@ -49,7 +43,7 @@
         </div>
     </div>
     
-    <!--<script type="module" src="index.js"></script>-->
+    <script type="module" src="index.js"></script>
 
     <!--<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>-->
 

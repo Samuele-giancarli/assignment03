@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class App {
 
-    private static final String CONTEXT = "/app";
+    private static final String CONTEXT = "/Assignement-03/assignment03/Web/app";
     private static final int PORT = 8000;
 
     public static void main(String[] args) throws InterruptedException, IOException {

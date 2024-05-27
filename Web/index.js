@@ -1,6 +1,5 @@
 
-import { client } from "socket.io";
-//const button = document.querySelector(".clickbutton");
+const button = document.querySelector(".clickbutton");
 
 /*function updateChart() {
   async function fetchData() {
@@ -57,26 +56,10 @@ const myChart = new Chart(
   config
 );*/
 
-
-  var socket = client.connect('http://localhost:8080');
-
-  socket.on('connect', function () {
-
-      console.log('Connected!\n\tSending query ...');
-
-      socket.emit('myEvent', '\tI am the query', function (data) {
-        console.log(data); 
-      });
-    });
-/*
 const getData = () =>{
   console.log("Funzioneaperta");
-  fetch('http://localhost/Assignement-03/assignment03/Web', {
-    method: "POST",
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    }
+  fetch('http://localhost:8000/Assignement-03/assignment03/Web/app?level=2003', {
+    method: "GET"
   })
   .then(response => {
     if (!response.ok) {
@@ -93,4 +76,3 @@ button.addEventListener('click', () => {
   console.log("Grazie per avermi cliccato");
   getData();
 })
-*/
