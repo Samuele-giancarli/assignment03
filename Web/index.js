@@ -1,4 +1,5 @@
-const button = document.querySelector(".clickbutton");
+
+//const button = document.querySelector(".clickbutton");
 
 /*function updateChart() {
   async function fetchData() {
@@ -55,7 +56,6 @@ const myChart = new Chart(
   config
 );*/
 
-window.onload(() => {
   var io = require('socket.io-client')
   var socket = io.connect('http://localhost:8080');
 
@@ -66,10 +66,7 @@ window.onload(() => {
       socket.emit('myEvent', '\tI am the query', function (data) {
         console.log(data); 
       });
-
-  });
-})
-
+    });
 /*
 const getData = () =>{
   console.log("Funzioneaperta");

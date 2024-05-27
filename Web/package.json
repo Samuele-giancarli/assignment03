@@ -1,5 +1,5 @@
 {
-  "name": "assignament-03-web",
+  "name": "web",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -9,6 +9,6 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "chart.js": "^4.4.2"
+    "socket.io-client": "^4.7.5"
   }
 }
