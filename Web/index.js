@@ -1,4 +1,5 @@
 
+import { client } from "socket.io";
 //const button = document.querySelector(".clickbutton");
 
 /*function updateChart() {
@@ -56,8 +57,8 @@ const myChart = new Chart(
   config
 );*/
 
-  var io = require('socket.io-client')
-  var socket = io.connect('http://localhost:8080');
+
+  var socket = client.connect('http://localhost:8080');
 
   socket.on('connect', function () {
 

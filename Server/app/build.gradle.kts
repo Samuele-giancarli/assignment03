@@ -28,6 +28,8 @@ dependencies {
     // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.0-M2")
 
+    compile ("io.socket:engine.io-server:6.1.0")
+
 
 
 }
