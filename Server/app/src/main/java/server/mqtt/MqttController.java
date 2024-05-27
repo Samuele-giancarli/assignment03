@@ -1,4 +1,4 @@
-package com.java.Java.mqtt;
+package server.mqtt;
 
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;

@@ -1,11 +1,13 @@
-package com.java.Java.message;
+package server.message;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.java.Java.state.StateController;
+import server.state.StateController;
+
+
 
 
 public class MessageController {

@@ -1,4 +1,4 @@
-package com.java.Java.state;
+package server.state;
 
 public enum StateEnum {
     NORMAL,

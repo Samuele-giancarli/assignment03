@@ -55,7 +55,22 @@ const myChart = new Chart(
   config
 );*/
 
+window.onload(() => {
+  var io = require('socket.io-client')
+  var socket = io.connect('http://localhost:8080');
 
+  socket.on('connect', function () {
+
+      console.log('Connected!\n\tSending query ...');
+
+      socket.emit('myEvent', '\tI am the query', function (data) {
+        console.log(data); 
+      });
+
+  });
+})
+
+/*
 const getData = () =>{
   console.log("Funzioneaperta");
   fetch('http://localhost/Assignement-03/assignment03/Web', {
@@ -80,5 +95,4 @@ button.addEventListener('click', () => {
   console.log("Grazie per avermi cliccato");
   getData();
 })
-
-
+*/
