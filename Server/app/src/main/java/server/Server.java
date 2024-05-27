@@ -3,16 +3,40 @@ package server;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 
 public class Server {
 
-    public void start() throws IOException {
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
-        server.createContext("/applications/myapp", new HttpServerHandler());
-        server.setExecutor(null); // creates a default executor
-        server.start(); 
+    private HttpServer httpServer;
+    
+    /**
+     * Instantiates a new simple http server.
+     *
+     * @param port the port
+     * @param context the context
+     * @param handler the handler
+     */
+    public Server(int port, String context, HttpHandler handler) {
+        try {
+            //Create HttpServer which is listening on the given port 
+            httpServer = HttpServer.create(new InetSocketAddress(port), 0);
+            //Create a new context for the given context and handler
+            httpServer.createContext(context, handler);
+            //Create a default executor
+            httpServer.setExecutor(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+ 
+    }
+ 
+    /**
+     * Start.
+     */
+    public void start() {
+        this.httpServer.start();
     }
 
 }
